@@ -20,30 +20,11 @@ namespace SmartVet.Controllers
             _context = context;
         }
 
-        // GET: AnimalSpecies
+        // GET: AnimalSpecies/Index
         public async Task<IActionResult> Index()
         {
             return View(await _context.AnimalSpecies.ToListAsync());
         }
-
-        // GET: AnimalSpecies/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var animalSpecie = await _context.AnimalSpecies
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (animalSpecie == null)
-            {
-                return NotFound();
-            }
-
-            return View(animalSpecie);
-        }
-
         // GET: AnimalSpecies/Create
         public IActionResult Create()
         {
@@ -51,17 +32,33 @@ namespace SmartVet.Controllers
         }
 
         // POST: AnimalSpecies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] AnimalSpecie animalSpecie)
+        public async Task<IActionResult> Create(AnimalSpecie animalSpecie)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(animalSpecie);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(animalSpecie);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una especie con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
             return View(animalSpecie);
         }
@@ -83,11 +80,9 @@ namespace SmartVet.Controllers
         }
 
         // POST: AnimalSpecies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] AnimalSpecie animalSpecie)
+        public async Task<IActionResult> Edit(int id, AnimalSpecie animalSpecie)
         {
             if (id != animalSpecie.Id)
             {
@@ -100,19 +95,23 @@ namespace SmartVet.Controllers
                 {
                     _context.Update(animalSpecie);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException dbUpdateException)
                 {
-                    if (!AnimalSpecieExists(animalSpecie.Id))
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, "Ya existe una especie con el mismo nombre.");
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
             return View(animalSpecie);
         }
@@ -135,7 +134,7 @@ namespace SmartVet.Controllers
             return View(animalSpecie);
         }
 
-        // POST: AnimalSpecies/Delete/5
+        // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -145,10 +144,5 @@ namespace SmartVet.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool AnimalSpecieExists(int id)
-        {
-            return _context.AnimalSpecies.Any(e => e.Id == id);
         }
-    }
 }
