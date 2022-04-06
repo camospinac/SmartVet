@@ -10,7 +10,7 @@ namespace SmartVet.Data
 
         }
         public DbSet<AnimalSpecie> AnimalSpecies { get; set; }
-
+        public DbSet<Procedure> Procedures { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
