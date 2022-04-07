@@ -11,10 +11,12 @@ namespace SmartVet.Data
         }
         public DbSet<AnimalSpecie> AnimalSpecies { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<AnimalSpecie>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<DocumentType>().HasIndex(d => d.Name).IsUnique();
         }
     }
 }
