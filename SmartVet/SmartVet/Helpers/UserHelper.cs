@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartVet.Data;
 using SmartVet.Data.Entities;
+using SmartVet.Models;
 
 namespace SmartVet.Helpers
 {
@@ -10,12 +11,14 @@ namespace SmartVet.Helpers
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
@@ -51,6 +54,16 @@ namespace SmartVet.Helpers
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task LogoutAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
