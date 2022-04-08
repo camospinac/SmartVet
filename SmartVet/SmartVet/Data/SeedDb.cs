@@ -24,6 +24,7 @@ namespace SmartVet.Data
             await CheckProcedureTypeAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1193410704", "Camilo", "Ospina", "camospinac@yopmail.com", "302 4042842", "Calle 22 #12-59", UserType.Admin);
+            await CheckUserAsync("39620351", "Miryam", "Cruz Torres", "miryamcruzt@yopmail.com", "316 8242064", "Calle 21 #14-54", UserType.User);
         }
 
         private async Task<User> CheckUserAsync(string document, string firstName, string lastName, string email, string phone, string address, UserType userType)
