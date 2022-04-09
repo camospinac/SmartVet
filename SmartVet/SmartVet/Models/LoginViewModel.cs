@@ -11,7 +11,7 @@ namespace SmartVet.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
-        [MinLength(6, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres.")]
+        [MinLength(6, ErrorMessage = "El campo {0} debe tener minimo {1} carácteres.")]
         [Required(ErrorMessage = "Debes ingresar una contraseña valida.")]
         public string Password { get; set; }
 

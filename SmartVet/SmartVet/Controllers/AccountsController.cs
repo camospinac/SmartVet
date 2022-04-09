@@ -15,7 +15,13 @@ namespace SmartVet.Controllers
 
         public IActionResult Login()
         {
-            return User.Identity.IsAuthenticated ? RedirectToAction("Index", "Home") : View(new LoginViewModel());
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(new LoginViewModel());
+
         }
 
         [HttpPost]

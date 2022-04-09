@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmartVet.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/ionicons.min.css+style.css.pagespeed.cc.hXbyd0IGKy.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
     <header>
@@ -25,7 +27,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Políticas de Privacidad</a>
                         </li>
-                        @*REVISAR LA VISTA AUTENTICADA*@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -69,11 +70,27 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-07">
         <div class="container">
-            &copy; 2022 - SmartVet - <a asp-area="" asp-controller="Home" asp-action="Privacy">Políticas de Privacidad</a>
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <h2 class="footer-heading" style="color: #626260">Somos SmartVet, lo mejor para tu mascota</h2>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 text-center">
+                    <p style="color: #626260">
+                        Derechos de Autor &copy;
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script> Derechos reservados | Web - App desarrollada por Camilo Ospina
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

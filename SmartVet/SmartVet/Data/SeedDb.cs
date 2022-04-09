@@ -34,12 +34,12 @@ namespace SmartVet.Data
             {
                 user = new User
                 {
-                    FirstName = firstName,
+                    FirstName = firstName,  
                     LastName = lastName,
                     Email = email,
                     UserName = email,
                     PhoneNumber = phone,
-                    Address = address,
+                    Address = address, 
                     Document = document,
                     DocumentType = _context.DocumentTypes.FirstOrDefault(),
                     UserType = userType,
